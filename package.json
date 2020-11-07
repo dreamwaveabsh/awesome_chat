@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/nhthien-19it1/awesome_chat#readme",
   "dependencies": {
+    "bluebird": "^3.5.3",
     "express": "^4.17.1",
     "mongoose": "^4.13.9"
   },
@@ -29,4 +30,3 @@
     "babel-preset-env": "^1.7.0"
   }
 }
-
