@@ -1,4 +1,5 @@
-var express = require("express");
+// var express = require("express");
+import express from "express"
 var app = express();
 var hostname = "localhost";
 var port = 3000;
@@ -9,4 +10,4 @@ app.get("/",(req,res)=>{
 })
 app.listen(port,hostname,()=>{
     console.log("success")
-})
+}) 
