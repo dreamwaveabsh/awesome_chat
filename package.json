@@ -1,0 +1,25 @@
+{
+  "name": "awesome_chat",
+  "version": "1.0.0",
+  "description": "Awesome Chat",
+  "main": "sever.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhthien-19it1/awesome_chat.git"
+  },
+  "keywords": [
+    "awesomechat"
+  ],
+  "author": "Nguyen Huu Thien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhthien-19it1/awesome_chat/issues"
+  },
+  "homepage": "https://github.com/nhthien-19it1/awesome_chat#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
