@@ -7,10 +7,25 @@ export const transValidation ={
 export const transErrors = {
   account_in_use:"Email này đã được sử dụng",
   account_remove:"Tài khoản này đã bị xóa",
-  account_not_active:"Tài khoản này đã đăng ký nhưng chưa active , vui lòng kiểm tra email để active tài khoản"
+  account_not_active:"Tài khoản này đã đăng ký nhưng chưa active , vui lòng kiểm tra email để active tài khoản",
+  token_null:"Token không tồn tại!"
 }
 export const transSuccess ={
   userCreated: (userEmail)=>{
     return `Tài khoản <strong>${userEmail}</strong> đã được tạo, vui lòng kiểm tra email của bạn để active tài khoản!!!`
-  }
+  },
+  account_active:"Kích hoạt tài khoản thành công , bạn có thể đăng nhập vào ứng dụng"
+
+}
+export const transMail ={
+  subject:"Active account Awesome Chat",
+  template:(linkVerify)=>{
+    return `
+      <h2>Bạn nhận được email này vì đã đăng ký trên website Awesome Chat</h2>
+      <h3>Vui lòng click vào link xác thực bên dưới để kích hoạt tài khoản</h3>
+      <h3><a href="${linkVerify}" target="blank">${linkVerify}</a></h3>
+      <h4>Cảm ơn mấy chú bé đần </h4>
+    `;
+  },
+  sendFail:"Có lỗi trong quá trình đăng ký tài khoản. Vui lòng bật quyền truy cập cho ứng dụng <a href='https://www.google.com/settings/security/lesssecureapps' target='blank'>Link</a>"
 }
