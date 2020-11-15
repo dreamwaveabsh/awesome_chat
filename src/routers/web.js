@@ -6,7 +6,8 @@ let router = express.Router();
 let initRouter = (app)=>{
   router.get("/", home.getHome);
   router.get("/login-register", auth.loginRegister);
-  router.post("/register",authValid.register,auth.postRegister)
+  router.post("/register",authValid.register,auth.postRegister);
+  router.get("/verify/:token",auth.verifyAccount)
   return app.use("/",router);
 };
 module.exports = initRouter;
