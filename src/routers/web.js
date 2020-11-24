@@ -4,6 +4,7 @@ import {home,auth} from "../controllers/index"
 import {authValid} from "../validation/index";
 import {initPassportLocal} from "./../controllers/passportController/local";
 import {initPassportFacebook} from "./../controllers/passportController/facebook";
+import {initPassportGoogle} from "./../controllers/passportController/google";
 
 
 //init passport local
@@ -11,6 +12,8 @@ import {initPassportFacebook} from "./../controllers/passportController/facebook
 let router = express.Router();
 initPassportLocal();
 initPassportFacebook();
+initPassportGoogle();
+
 
 let initRouter = (app)=>{
   router.get("/",auth.checkLogin, home.getHome);
@@ -24,11 +27,18 @@ let initRouter = (app)=>{
     successFlash:true,
     failureFlash:true
   }));
-  router.get("/auth/facebook",passport.authenticate('facebook',{scope:["email"]}));
-  router.get("/auth/facebook/callback",passport.authenticate('facebook',{
+
+  router.get("/auth/facebook",auth.checkLogout,passport.authenticate('facebook',{scope:["email"]}));
+  router.get("/auth/facebook/callback",auth.checkLogout,passport.authenticate('facebook',{
     successRedirect:"/",
     failureRedirect:"/login-register"
-  }))
+  }));
+
+  router.get("/auth/google",auth.checkLogout,passport.authenticate('google',{scope:["email"]}));
+  router.get("/auth/google/callback",auth.checkLogout,passport.authenticate('google',{
+    successRedirect:"/",
+    failureRedirect:"/login-register"
+  }));
   router.get("/logout",auth.checkLogin,auth.getLogout)
   return app.use("/",router);
 };
