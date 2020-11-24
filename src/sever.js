@@ -6,7 +6,8 @@ import { bluebird } from "bluebird";
 import initRouter from "./routers/web";
 import bodyParser from "body-parser";
 import connectFlash from "connect-flash"
-import configSession from "./config/session"
+import configSession from "./config/session";
+import passport from "passport";
 var app = express();
 
 //connect to mongodb
@@ -20,6 +21,9 @@ configViewEngine(app);
 app.use(bodyParser.urlencoded({ extended: true }))
 //connect Flash
 app.use(connectFlash());
+//passport
+app.use(passport.initialize());
+app.use(passport.session());    
 //init router
 initRouter(app);
 app.listen(3000,()=>{

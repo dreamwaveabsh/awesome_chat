@@ -141,7 +141,12 @@ function cancelCreateGroup() {
     }
   });
 }
-
+function flashMasterNotify(){
+    let notify = $(".master-success-message").text();
+    if(notify.length){
+      alertify.notify(notify,"success",4);
+    }
+}
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -171,4 +176,6 @@ $(document).ready(function() {
 
   // Action hủy việc tạo nhóm trò chuyện
   cancelCreateGroup();
+  //hiện thông báo đăng nhập thành công
+  flashMasterNotify();
 });
