@@ -8,8 +8,41 @@ import bodyParser from "body-parser";
 import connectFlash from "connect-flash"
 import configSession from "./config/session";
 import passport from "passport";
-var app = express();
 
+
+// import https from "https";
+// import pem from "pem";
+// pem.config({
+//     pathOpenSSL: '/usr/local/bin/openssl'
+//   })
+// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
+//     if (err) {
+//       throw err
+//     }
+//     let app = express();
+//     //connect to mongodb
+//     connectDB();
+//     //config session
+//     configSession(app);
+
+//     //config view engine
+//     configViewEngine(app);
+//     //bodyParser
+//     app.use(bodyParser.urlencoded({ extended: true }))
+//     //connect Flash
+//     app.use(connectFlash());
+//     //passport
+//     app.use(passport.initialize());
+//     app.use(passport.session());    
+//     //init router
+//     initRouter(app);
+   
+//     https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(3000,()=>{
+//         console.log("success")
+//     }); 
+//   });
+
+var app = express();
 //connect to mongodb
 connectDB();
 //config session
