@@ -8,6 +8,9 @@ import bodyParser from "body-parser";
 import connectFlash from "connect-flash"
 import configSession from "./config/session";
 import passport from "passport";
+import https from "https";
+import path from "path";
+import fs from "fs";
 
 
 // import https from "https";
@@ -42,6 +45,10 @@ import passport from "passport";
 //     }); 
 //   });
 
+
+
+
+
 var app = express();
 //connect to mongodb
 connectDB();
@@ -59,7 +66,20 @@ app.use(passport.initialize());
 app.use(passport.session());    
 //init router
 initRouter(app);
-app.listen(3000,()=>{
+
+
+const sslSever = https.createServer(
+  {
+    key: fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
+  },
+  app
+)
+
+
+
+
+sslSever.listen(3000,()=>{
     console.log("success")
 }) 
 
