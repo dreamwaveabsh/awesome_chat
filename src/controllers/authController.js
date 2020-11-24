@@ -1,6 +1,7 @@
 import { bluebird } from "bluebird";
 import {validationResult} from "express-validator/check";
 import {auth} from "./../services/index"
+import {transSuccess} from "./../../lang/vi"
 
 let loginRegister=(req,res)=>{
   return res.render("auth/master",{
@@ -47,8 +48,31 @@ let verifyAccount = async (req,res) =>{
   }
 }
 
+let getLogout = (req,res)=>{
+  req.logout();
+  req.flash("success",transSuccess.logout_success);
+  res.redirect("/login-register")
+}
+
+let checkLogin = (req,res,next) =>{
+  if(!req.isAuthenticated()){
+    return res.redirect("/login-register")
+  }
+  next()
+}
+
+let checkLogout = (req,res,next) =>{
+  if(req.isAuthenticated()){
+    return res.redirect("/")
+  }
+  next()
+}
+
 module.exports = {
   loginRegister:loginRegister,
   postRegister:postRegister,
-  verifyAccount:verifyAccount
+  verifyAccount:verifyAccount,
+  getLogout:getLogout,
+  checkLogin:checkLogin,
+  checkLogout:checkLogout
 }
