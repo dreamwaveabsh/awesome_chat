@@ -68,18 +68,18 @@ app.use(passport.session());
 initRouter(app);
 
 
-const sslSever = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname,'cert','key.pem')),
-    cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
-  },
-  app
-)
+// const sslSever = https.createServer(
+//   {
+//     key: fs.readFileSync(path.join(__dirname,'cert','key.pem')),
+//     cert:fs.readFileSync(path.join(__dirname,'cert','cert.pem'))
+//   },
+//   app
+// )
 
 
 
 
-sslSever.listen(3000,()=>{
+app.listen(3000,()=>{
     console.log("success")
 }) 
 
