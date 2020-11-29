@@ -30,7 +30,8 @@ function updateUserInfo(){
         }).appendTo(imagePreview);
       }
       imagePreview.show();
-      fileReader.readAsDataURL(fileData)
+      fileReader.readAsDataURL(fileData);
+
       let formData = new FormData();
       formData.append("avatar",fileData);
       userAvatar= formData;
@@ -70,18 +71,27 @@ $(document).ready(function(){
       processData:false,
       data:userAvatar,
       success:function(result){
-
+        console.log(result)
+        //display success
+        $(".user-modal-alert-success").find("span").text(result.message);
+        $(".user-modal-alert-success").css("display","block");
+        $("#navbar-avatar").attr("src",result.imageSrc)
+        originAvatarSrc = result.imageSrc;
+        $("#input-btn-calcel-update-user").click();
       },
       error:function(error){
-
+        //display error
+        $(".user-modal-alert-error").find("span").text(error.responseText);
+        $(".user-modal-alert-error").css("display","block");
+        //reset all
+        $("#input-btn-calcel-update-user").click();
       }
     })
-    // console.log(userAvatar)
-    // console.log(userInfo)
   })
   $("#input-btn-calcel-update-user").bind("click",function(){
      userAvatar = null;
      userInfo = {};
+     $("#imput-change-avatar").val(null);
      $("#user-modal-avatar").attr("src",originAvatarSrc)
   })
 })
