@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
 import {home,auth,user} from "../controllers/index"
-import {authValid} from "../validation/index";
+import {authValid,userValid} from "../validation/index";
 import {initPassportLocal} from "./../controllers/passportController/local";
 import {initPassportFacebook} from "./../controllers/passportController/facebook";
 import {initPassportGoogle} from "./../controllers/passportController/google";
@@ -40,7 +40,8 @@ let initRouter = (app)=>{
     failureRedirect:"/login-register"
   }));
   router.get("/logout",auth.checkLogin,auth.getLogout);
-  router.put("/user/update-avatar",auth.checkLogin,user.updateAvatar)
+  router.put("/user/update-avatar",auth.checkLogin,user.updateAvatar);
+  router.put("/user/update-info",auth.checkLogin,userValid.updateinfo,user.updateInfo);
   return app.use("/",router);
 };
 module.exports = initRouter;
