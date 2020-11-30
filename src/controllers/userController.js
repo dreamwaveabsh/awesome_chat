@@ -3,8 +3,9 @@ import {app} from "./../config/app"
 import uuidv4 from "uuid/v4"
 import {transErrors,transSuccess} from "./../../lang/vi"
 import { bluebird } from "bluebird";
-import {user} from "./../services/index"
-import fsExtra from "fs-extra"
+import {user} from "./../services/index";
+import fsExtra from "fs-extra";
+import {validationResult} from "express-validator/check";
 let storageAvatar = multer.diskStorage({
   destination:(req,file,callback)=>{
     callback(null,app.avatar_directory)
@@ -42,7 +43,7 @@ let updateAvatar = (req,res) =>{
      //remove old avatar
       await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`);
       let result ={
-        message:transSuccess.avatar_update,
+        message:transSuccess.info_update,
         imageSrc:`/images/users/${req.file.filename}`
       }
       return res.status(200).send(result)
@@ -53,6 +54,31 @@ let updateAvatar = (req,res) =>{
     
   });
 }
+
+let updateInfo = async (req,res)=>{
+  let errorArr =[]; 
+  let validationErrors = validationResult(req);
+  if(!validationErrors.isEmpty()){
+    let errors = Object.values(validationErrors.mapped());
+    for(var item of errors){
+      errorArr.push(item.msg)
+    }
+
+    return res.status(500).send(errorArr)
+  }
+  try {
+      let updateUserItem = req.body;
+      await user.updateUser(req.user._id,updateUserItem);
+      let result ={
+        message:transSuccess.info_update
+      }
+      return res.status(200).send(result)
+  } catch (error) {
+    console.log(error)
+    return res.status(500).send(error);
+  }
+}
 module.exports = {
-  updateAvatar : updateAvatar
+  updateAvatar : updateAvatar,
+  updateInfo:updateInfo
 }
