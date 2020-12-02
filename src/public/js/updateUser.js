@@ -2,7 +2,31 @@ let userAvatar = null;
 let userInfo = {};
 let originAvatarSrc=null;
 let originUserInfo = {};
+let userUpdatePassword = {};
 
+function callLogout(){
+  let timerInterval;
+
+  Swal.fire({
+    position: 'top-end',
+    title: 'Tự động đăng xuất sau 5 giây.',
+    html:"Thời gian: <strong></strong>",
+    timer: 5000,
+    onBeforeOpen : ()=>{
+      Swal.showLoading();
+      timerInterval = setInterval(() => {
+        Swal.getContent().querySelector("strong").textContent = Math.ceil(Swal.getTimerLeft()/1000)
+      }, 1000);
+    },
+    onClose:()=>{
+      clearInterval(timerInterval);
+    }
+  }).then((result)=>{
+    $.get("/logout",function(){
+      location.reload()
+    })
+  });
+}
 function updateUserInfo(){
   $("#input-change-avatar").bind("change",function(){
     let fileData = $(this).prop("files")[0];
@@ -42,7 +66,7 @@ function updateUserInfo(){
   })
   $("#input-change-username").bind("change",function(){
     let username = $(this).val();;
-    let regexUsername =  new RegExp("^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$");
+    let regexUsername =  new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/);
     if(!regexUsername.test(username)||username.length<3||username.length>20){
       alertify.notify("User name giới hạn trong khoảng 3-20 ký tự và không được chứa ký tự đặt biệt","error",7)
       $(this).val(originUserInfo.username)
@@ -86,7 +110,7 @@ function updateUserInfo(){
   })
   $("#input-change-phone").bind("change",function(){
     let phone = $(this).val();
-    let regexPhone = new RegExp("^(0)[0-9]{9,10}$");
+    let regexPhone = new RegExp(/^(0)[0-9]{9,10}$/);
     if(!regexPhone.test(phone)){
       alertify.notify("Số điện thoại Việt Nam bắt đầu bằng số 0 và giới hạn trong 10-11 ký tự","error",7)
       $(this).val(originUserInfo.phone)
@@ -95,6 +119,47 @@ function updateUserInfo(){
     }
     userInfo.phone = phone;
   })
+  $("#input-change-current-password").bind("change",function(){
+    let currentPassword = $(this).val();
+    let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+    if(!regexPassword.test(currentPassword)){
+      alertify.notify("Mật khẩu phải dài hơn 8 ký tự, bao gồm chữ thường, chữ im hoa và ký tự đặc biệt","error",7)
+      $(this).val(null)
+      delete userUpdatePassword.currentPassword
+      return false
+    }
+    userUpdatePassword.currentPassword = currentPassword;
+  })
+  $("#input-change-new-password").bind("change",function(){
+    let newPassword = $(this).val();
+    let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+    if(!regexPassword.test(newPassword)){
+      alertify.notify("Mật khẩu phải dài hơn 8 ký tự, bao gồm chữ thường, chữ im hoa và ký tự đặc biệt","error",7)
+      $(this).val(null)
+      delete userUpdatePassword.newPassword
+      return false
+    }
+    userUpdatePassword.newPassword = newPassword;
+  })
+  $("#input-change-confirm-new-password").bind("change",function(){
+    let confirmNewPassword = $(this).val();
+
+    if(!userUpdatePassword.newPassword){
+      alertify.notify("Bạn cần nhập mật khẩu mới","error",7);
+      $(this).val(null)
+      delete userUpdatePassword.confirmNewPassword
+      return false
+    }
+    if(confirmNewPassword!==userUpdatePassword.newPassword){
+      alertify.notify("Nhập lại mật khẩu chưa chính xác","error",7);
+      $(this).val(null)
+      delete userUpdatePassword.confirmNewPassword
+      return false
+    }
+
+    userUpdatePassword.confirmNewPassword = confirmNewPassword;
+  })
+  
 }
 
 function callUpdateAvatar(){
@@ -152,6 +217,30 @@ function callUpdateUserInfo(){
   })
 
 }
+function callUpdateUserPassword(){
+  $.ajax({
+    url:"/user/update-password",
+    type:"put",
+    data:userUpdatePassword,
+    success:function(result){
+      console.log(result)
+      //display success
+      $(".user-modal-password-alert-success").find("span").text(result.message);
+      $(".user-modal-password-alert-success").css("display","block");
+      
+      $("#input-btn-cancel-update-user-password").click();
+      //logout after change password
+      callLogout();
+    },
+    error:function(error){
+      //display error
+      $(".user-modal-password-alert-error").find("span").text(error.responseText);
+      $(".user-modal-password-alert-error").css("display","block");
+      //reset all
+      $("#input-btn-cancel-update-user-password").click();
+    }
+  })
+}
 
 $(document).ready(function(){
   
@@ -168,12 +257,24 @@ $(document).ready(function(){
       alertify.notify("Bạn phải thay đổi thông tin trước khi cập nhật dữ liệu","error",5);
       return false;
     }
-    if(userAvatar){
-      callUpdateAvatar();
-    }
-    if(!$.isEmptyObject(userInfo)){
-      callUpdateUserInfo();
-    }
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn đổi thông tin!',
+      text: "Đổi rồi thôi đó nghe!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#2ECC71',
+      cancelButtonColor: '#ff7675',
+      confirmButtonText: 'Xác nhận!',
+      cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+      if(userAvatar){
+        callUpdateAvatar();
+      }
+      if(!$.isEmptyObject(userInfo)){
+        callUpdateUserInfo();
+      }
+    })
+
 
   })
 
@@ -187,4 +288,36 @@ $(document).ready(function(){
      $("#input-change-address").val(originUserInfo.address);
      $("#input-change-phone").val(originUserInfo.phone);
   })
+
+  $("#input-btn-update-user-password").bind("click",function(){
+    if(!userUpdatePassword.currentPassword||!userUpdatePassword.newPassword||!userUpdatePassword.confirmNewPassword){
+      alertify.notify("Bạn phải nhập đầy đủ thông tin","error",7);
+      return false;
+    }
+    Swal.fire({
+      title: 'Bạn có chắc chắn muốn thay đổi mật khẩu?',
+      text: "Đổi xong quên mình không biết đâu à!",
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonColor: '#2ECC71',
+      cancelButtonColor: '#ff7675',
+      confirmButtonText: 'Xác nhận!',
+      cancelButtonText: 'Hủy bỏ'
+    }).then((result) => {
+      console.log(result)
+      if(!result.value){
+        $("#input-btn-cancel-update-user-password").click();
+      }
+      callUpdateUserPassword();
+    })
+  })
+
+  $("#input-btn-cancel-update-user-password").bind("click",function(){
+    userUpdatePassword = {};
+    $("#input-change-current-password").val(null);
+    $("#input-change-new-password").val(null);
+    $("#input-change-confirm-new-password").val(null);
+
+  })
+  
 })

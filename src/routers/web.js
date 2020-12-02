@@ -42,6 +42,7 @@ let initRouter = (app)=>{
   router.get("/logout",auth.checkLogin,auth.getLogout);
   router.put("/user/update-avatar",auth.checkLogin,user.updateAvatar);
   router.put("/user/update-info",auth.checkLogin,userValid.updateinfo,user.updateInfo);
+  router.put("/user/update-password",auth.checkLogin,userValid.updatePassword,user.updatePassword);
   return app.use("/",router);
 };
 module.exports = initRouter;
