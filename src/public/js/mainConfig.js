@@ -1,3 +1,5 @@
+const socket = io();
+
 /**
  * Created by https://trungquandev.com's author on 25/02/2018.
  */

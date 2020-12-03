@@ -1,7 +1,7 @@
 <div class="col-sm-9 sidenav no-padding">
   <div class="right" data-chat="">
       <div class="top">
-          <span>To: <span class="name">Trung Quân (admin)</span></span>
+          <span>To: <span class="name"><%= user.username %> (admin)</span></span>
           <span class="chat-menu-right">
               <a href="#attachsModal" id="show-attachs" data-toggle="modal">
                   Tệp đính kèm
@@ -20,9 +20,9 @@
       </div>
       <div class="content-chat">
           <div class="chat" data-chat="">
-              <div class="bubble me" data-mess-id="${item._id}">Hello, I'm Trung Quan, author of https://trungquandev.com</div>
-              <div class="bubble you" data-mess-id="${item._id}">Really? I'm Trung Quan too, author of https://trungquandev.com, are you fake?</div>
-              <div class="bubble me" data-mess-id="${item._id}">This is me !!!</div>
+              <div class="bubble me" data-mess-id="${item._id}">Hello, I'm Huu Thien</div>
+              <div class="bubble you" data-mess-id="${item._id}">Really? I'm Huu Thien too</div>
+              <!-- <div class="bubble me" data-mess-id="${item._id}">This is me !!!</div>
               <div class="bubble me bubble-image-file" data-mess-id="${item._id}">
                   <img src="images/users/default-avatar-trungquandev-01.jpg" class="show-image-chat">
               </div>
@@ -41,7 +41,7 @@
                   download="${ item.file.fileName }">
                       Tệp văn bản - trungquandev.docx
                   </a>
-              </div>
+              </div> -->
           </div>
       </div>
       <div class="write" data-chat="">
