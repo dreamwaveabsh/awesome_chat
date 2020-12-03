@@ -6,7 +6,8 @@ export const transValidation ={
   update_username:"User name giới hạn trong khoảng 3-20 ký tự và không được chứa ký tự đặt biệt",
   update_gender:"Giới tính chỉ được nam và nữ  thôi , ok ",
   update_address:"Địa chỉ giới hạn trong khoảng 3-30 ký tự",
-  update_phone:"Số điện thoại Việt Nam bắt đầu bằng số 0 và giới hạn trong 10-11 ký tự"
+  update_phone:"Số điện thoại Việt Nam bắt đầu bằng số 0 và giới hạn trong 10-11 ký tự",
+  keyword_find_user:"Chỉ cho phép chữ cái và số"
 }
 export const transErrors = {
   account_in_use:"Email này đã được sử dụng",
