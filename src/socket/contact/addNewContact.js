@@ -1,8 +1,22 @@
+import {pushSocketIdToAraay,emitNotifyToArray,removeSocketIdToAraay} from "./../../helper/socketHelper"
+
 let addNewContact = (io)=>{
+  let clients = {};
   io.on("connection",(socket)=>{
+    clients = pushSocketIdToAraay(clients,socket.request.user._id,socket.id)
+
     socket.on("add-new-contact",(data)=>{
-      console.log(data)
-      console.log(Object.values(socket.request.user)[3])
+      let currentUser = {
+        id:socket.request.user._id,
+        username:socket.request.user.username,
+        avatar:socket.request.user.avatar,
+      };
+      if(clients[data.contactId]){
+        emitNotifyToArray(clients,data.contactId,io,"response-add-new-contact",currentUser)
+      }
+    })
+    socket.on("disconnect",()=>{
+      clients = removeSocketIdToAraay(clients,socket.request.user._id,socket)
     })
   })
 }
