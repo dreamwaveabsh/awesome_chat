@@ -6,44 +6,16 @@ import { bluebird } from "bluebird";
 import initRouter from "./routers/web";
 import bodyParser from "body-parser";
 import connectFlash from "connect-flash"
-import configSession from "./config/session";
+import session from "./config/session";
 import passport from "passport";
 import https from "https";
 import path from "path";
 import fs from "fs";
-
-
-// import https from "https";
-// import pem from "pem";
-// pem.config({
-//     pathOpenSSL: '/usr/local/bin/openssl'
-//   })
-// pem.createCertificate({ days: 1, selfSigned: true }, function (err, keys) {
-//     if (err) {
-//       throw err
-//     }
-//     let app = express();
-//     //connect to mongodb
-//     connectDB();
-//     //config session
-//     configSession(app);
-
-//     //config view engine
-//     configViewEngine(app);
-//     //bodyParser
-//     app.use(bodyParser.urlencoded({ extended: true }))
-//     //connect Flash
-//     app.use(connectFlash());
-//     //passport
-//     app.use(passport.initialize());
-//     app.use(passport.session());    
-//     //init router
-//     initRouter(app);
-   
-//     https.createServer({ key: keys.serviceKey, cert: keys.certificate }, app).listen(3000,()=>{
-//         console.log("success")
-//     }); 
-//   });
+import http from "http"
+import socketio from "socket.io"
+import initSockets from "./socket/index"
+import cookieParser from "cookie-parser"
+import configSocketIo from "./config/socketio"
 
 
 
@@ -51,9 +23,15 @@ import fs from "fs";
 
 var app = express();
 //connect to mongodb
+
+//init sever with socket.io & express app
+let sever = http.createServer(app);
+let io = socketio(sever);
+
+
 connectDB();
 //config session
-configSession(app);
+session.config(app);
 
 //config view engine
 configViewEngine(app);
@@ -61,11 +39,19 @@ configViewEngine(app);
 app.use(bodyParser.urlencoded({ extended: true }))
 //connect Flash
 app.use(connectFlash());
+//use cookie parser
+app.use(cookieParser())
 //passport
 app.use(passport.initialize());
 app.use(passport.session());    
 //init router
 initRouter(app);
+
+//config socket io
+configSocketIo(io,cookieParser,session.sessionStore)
+
+//init socket 
+initSockets(io);
 
 
 // const sslSever = https.createServer(
@@ -79,7 +65,7 @@ initRouter(app);
 
 
 
-app.listen(3000,()=>{
+sever.listen(3000,()=>{
     console.log("success")
 }) 
 

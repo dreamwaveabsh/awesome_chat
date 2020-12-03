@@ -14,10 +14,10 @@
               <li class="person" data-chat="contact._id">
                   <div class="left-avatar">
                       <div class="dot"></div>
-                      <img src="images/users/default-avatar-trungquandev-01.jpg" alt="">
+                      <img src="images/users/<%=user.avatar%>" alt="">
                   </div>
                   <span class="name">
-                      Trung Quân
+                      <%= user.username %>
                   </span>
                   <span class="time">Một phút trước</span>
                   <span class="preview">Xin chào</span>
@@ -36,7 +36,7 @@
                   <span class="preview">Chào cả nhóm</span>
               </li>
           </a>
-          <a href="#" class="room-chat" id="null-contact">
+          <!-- <a href="#" class="room-chat" id="null-contact">
               <li class="person active" data-chat="person-default">
                   <div class="left-avatar">
                       <div class="dot online"></div>
@@ -46,7 +46,7 @@
                   <span class="time">Bây giờ</span>
                   <span class="preview">Xin chào <strong>Trung Quân</strong>...</span>
               </li>
-          </a>
+          </a> -->
       </ul>
   </div>
 </div>
