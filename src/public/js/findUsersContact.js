@@ -14,7 +14,9 @@ function callFindUsers(element){
       return false
     }
     $.get(`/contact/find-users/${keyword}`,function(data){
-      $("#find-user ul").html(data)
+      $("#find-user ul").html(data);
+      addContact(); // js/contact.js
+      removeRequestContact(); //js/removeRequestContact.js
     })
   }
 }
