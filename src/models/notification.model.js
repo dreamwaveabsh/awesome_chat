@@ -29,7 +29,16 @@ NotificationSchema.statics = {
     return this.find({
       "receiverId":userId
     }).sort({"createAt":-1}).limit(limit).exec()
+  },
+  countNotifUnRead(userId){
+    return this.count({
+      $and:[
+        {"receiverId":userId},
+        {"isRead":false}
+      ]
+    }).exec();
   }
+
 }
 
 const NOTIFICATION_TYPES = {
@@ -39,11 +48,15 @@ const NOTIFICATION_CONTENT = {
   getContent:(notificationType,isRead,userId,username,userAvatar)=>{
     if(notificationType===NOTIFICATION_TYPES.ADD_CONTACT){
       if(!isRead){
-        return `<span class="notif-readed-false" data-uid="${userId}">
+        return `<div class="notif-readed-false" data-uid="${userId}">
                 <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
                 <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
-                </span><br><br><br>`
+                </div>`
       }
+      return `<div data-uid="${userId}">
+                <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
+                <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+                </div>`
     }
     return "Không có thông báo nào"
   }
