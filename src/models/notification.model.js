@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { type } from "os";
 
 let Schema  = mongoose.Schema;
 
@@ -28,7 +27,12 @@ NotificationSchema.statics = {
   getByUserIdAndLimit(userId,limit){
     return this.find({
       "receiverId":userId
-    }).sort({"createAt":-1}).limit(limit).exec()
+    }).sort({"createAt":-1}).limit(limit).exec();
+  },
+  readMore(userId , skip , limit){
+    return this.find({
+      "receiverId":userId
+    }).sort({"createAt":-1}).limit(limit).skip(skip).exec();
   },
   countNotifUnRead(userId){
     return this.count({
@@ -38,7 +42,6 @@ NotificationSchema.statics = {
       ]
     }).exec();
   }
-
 }
 
 const NOTIFICATION_TYPES = {

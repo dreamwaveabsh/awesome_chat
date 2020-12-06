@@ -864,41 +864,10 @@ label:focus,
   max-width: 50%;
 }
 
-#loader {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  z-index: 2;
-  width: 150px;
-  height: 150px;
-  margin: -75px 0 0 -75px;
-  border: 7px solid #f3f3f3;
-  border-radius: 50%;
-  border-top: 7px solid #7ed6df;
-  border-bottom: 7px solid #7ed6df;
-  width: 70px;
-  height: 70px;
-  -webkit-animation: spin 2s linear infinite;
-  animation: spin 2s linear infinite;
-}
 
-@-webkit-keyframes spin {
-  0% {
-    -webkit-transform: rotate(0deg);
-  }
-  100% {
-    -webkit-transform: rotate(360deg);
-  }
-}
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
+
+
 
 .bubble-attach-file {
   background-color: #ECF0FE !important;
@@ -1323,4 +1292,69 @@ label:focus,
 }
 .read-more-notif{
   text-align: center;
+}
+.lds-hourglass {
+  display: none;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-hourglass:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 15px solid #34495e;
+  border-color: #34495e transparent #34495e transparent;
+  animation: lds-hourglass 1.2s infinite;
+}
+@keyframes lds-hourglass {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
+}
+
+/*  */
+.master-loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  margin: -75px 0 0 -75px;
+}
+.master-loader:after {
+  content: " ";
+  display: block;
+  border-radius: 50%;
+  width: 0;
+  height: 0;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 32px solid  #34495e;
+  border-color:  #34495e transparent  #34495e transparent;
+  animation: master-loader 1.2s infinite;
+}
+@keyframes master-loader {
+  0% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  }
+  50% {
+    transform: rotate(900deg);
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  100% {
+    transform: rotate(1800deg);
+  }
 }
