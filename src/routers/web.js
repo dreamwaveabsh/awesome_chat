@@ -46,6 +46,7 @@ let initRouter = (app)=>{
   router.get("/contact/find-users/:keyword",auth.checkLogin,contactValid.findUserContact,contact.findUserContact)
   router.post("/contact/add-new",auth.checkLogin,contact.addNew)
   router.delete("/contact/remove/request-contact-sent",auth.checkLogin,contact.removeRequestContactSent)
+  router.delete("/contact/remove-request-contact-received",auth.checkLogin,contact.removeRequestContactReceived)
   router.get("/contact/read-more-contacts",auth.checkLogin,contact.readMoreContacts)
   router.get("/contact/read-more-contacts-sent",auth.checkLogin,contact.readMoreContactsSent)
   router.get("/contact/read-more-contacts-received",auth.checkLogin,contact.readMoreContactsReceived)
