@@ -44,7 +44,8 @@ let initRouter = (app)=>{
   router.put("/user/update-info",auth.checkLogin,userValid.updateinfo,user.updateInfo);
   router.put("/user/update-password",auth.checkLogin,userValid.updatePassword,user.updatePassword);
   router.get("/contact/find-users/:keyword",auth.checkLogin,contactValid.findUserContact,contact.findUserContact)
-  router.post("/contact/add-new",auth.checkLogin,contact.addNew)
+  router.post("/contact/add-new",auth.checkLogin,contact.addNew);
+  router.delete("/contact/remove-contact",auth.checkLogin,contact.removeContact);
   router.delete("/contact/remove/request-contact-sent",auth.checkLogin,contact.removeRequestContactSent)
   router.delete("/contact/remove-request-contact-received",auth.checkLogin,contact.removeRequestContactReceived)
   router.put("/contact/approve-request-contact-received",auth.checkLogin,contact.approveRequestContactReceived)

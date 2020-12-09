@@ -40,6 +40,7 @@ $(document).ready(function(){
         </div>
     </li>`);
       });
+      removeContact();
       $("#link-read-more-contacts").css("display","inline-block")
       $(".lds-hourglass").css("display","none")
     });
