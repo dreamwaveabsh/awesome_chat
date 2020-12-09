@@ -41,8 +41,20 @@ let readMore =(currentUserId,skipNumberNotification)=>{
     }
   })
 }
+let markAllAsRead =(currentUserId,targetUser)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      await notificationModel.model.markAllAsRead(currentUserId,targetUser);
+      resolve(true)
+    } catch (error) {
+      console.log(`lỗi:${error}`)
+      reject(false);
+    }
+  })
+}
 module.exports = {
   getNotifications:getNotifications,
   countNotifUnRead:countNotifUnRead,
-  readMore:readMore
+  readMore:readMore,
+  markAllAsRead:markAllAsRead
 }
