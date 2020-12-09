@@ -26,6 +26,8 @@ function approveRequestContactReceived(){
           decreaseNumberNotifContact("count-request-contact-received")
           increaseNumberNotifContact("count-contacts");
           decreaseNumberNotification("noti_contact_counter",1);
+          removeContact();
+          //sau này làm chức năng chat thì sẽ xóa tiếp user ở phần chat
           socket.emit("approve-request-contact-received",{contactId:targetId})
         }
       }
@@ -71,6 +73,8 @@ let userInfoHtml = `<li class="_contactList" data-uid="${user.id}">
                         </div>
                       </li>`
   $("#contacts").find(`ul`).prepend(userInfoHtml);
+  removeContact();
+  //sau này làm chức năng chat thì sẽ xóa tiếp user ở phần chat
   
 });
 
