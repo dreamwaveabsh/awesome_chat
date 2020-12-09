@@ -12,6 +12,8 @@ function removeRequestContact(){
           $("#find-user").find(`div.user-add-new-contact[data-uid=${targetId}]`).css("display","inline-block");
           decreaseNumberNotifContact("count-request-contact-sent");
 
+          $("#request-contact-send").find(`li[data-uid=${targetId}]`).remove();
+
           socket.emit("remove-request-contact",{contactId: targetId});
         }
       }
@@ -21,9 +23,11 @@ function removeRequestContact(){
 
 socket.on("response-remove-request-contact",function(user){
   $(".noti_content").find(`div[data-uid=${user.id}]`).remove(); // xoa o notif
-  $("ul.list-notifications").find(`li>div[data-uid=${user.id}]`).remove();
+  $("ul.list-notifications").find(`li>div[data-uid=${user.id}]`).parent().remove();
 
-  // xoas o tab modal
+
+$("#request-contact-received").find(`li[data-uid=${user.id}]`).remove();
+
 decreaseNumberNotifContact("count-request-contact-received");
 decreaseNumberNotification("noti_contact_counter",1)
 decreaseNumberNotification("noti_counter",1)

@@ -51,9 +51,90 @@ let removeRequestContact = (currentUserId,contactId) =>{
 
   });
 }
+let getContacts = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let contacts = await contactModel.getContacts(currentUserId,10);
+      let users =  contacts.map(async (contact)=>{
+        if(contact.contactId == currentUserId){
+          return await userModel.findUserById(contact.userId);
+        }else{
+          return await userModel.findUserById(contact.contactId);
+        }
+       
+      });
+      resolve(await Promise.all(users))
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+let getContactsSent = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let contacts = await contactModel.getContactsSent(currentUserId,10);
+      let users =  contacts.map(async (contact)=>{
+        return await userModel.findUserById(contact.contactId)
+      });
+      resolve(await Promise.all(users))
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+let getContactsReceived = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let contacts = await contactModel.getContactsReceived(currentUserId,10);
+      let users =  contacts.map(async (contact)=>{
+        return await userModel.findUserById(contact.userId)
+      });
+      resolve(await Promise.all(users))
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+let countAllContacts = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let count = await contactModel.countAllContacts(currentUserId);
+      resolve(count)
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+let countAllContactsSent = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let count = await contactModel.countAllContactsSent(currentUserId);
+      resolve(count)
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+let countAllContactsReceived = (currentUserId) =>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      let count = await contactModel.countAllContactsReceived(currentUserId);
+      resolve(count)
+    } catch (error) {
+      reject(error)
+    }
+  });
+}
+
 
 module.exports = {
   findUserContact:findUserContact,
   addNew:addNew,
-  removeRequestContact:removeRequestContact
+  removeRequestContact:removeRequestContact,
+  getContacts:getContacts,
+  getContactsSent:getContactsSent,
+  getContactsReceived:getContactsReceived,
+  countAllContacts:countAllContacts,
+  countAllContactsSent:countAllContactsSent,
+  countAllContactsReceived:countAllContactsReceived,
 }
