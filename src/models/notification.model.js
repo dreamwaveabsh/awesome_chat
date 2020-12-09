@@ -41,6 +41,14 @@ NotificationSchema.statics = {
         {"isRead":false}
       ]
     }).exec();
+  },
+  markAllAsRead(userId,targetUser){
+    return this.updateMany({
+      $and:[
+        {"receiverId":userId},
+        {"senderId":{$in:targetUser}}
+      ]
+    },{"isRead":true}).exec();
   }
 }
 

@@ -48,6 +48,7 @@ let initRouter = (app)=>{
   router.delete("/contact/remove/request-contact",auth.checkLogin,contact.removeRequestContact)
 
   router.get("/notification/read-more",auth.checkLogin,notification.readMore)
+  router.put("/notification/mark-all-as-read",auth.checkLogin,notification.markAllAsRead)
   return app.use("/",router);
 };
 module.exports = initRouter;
