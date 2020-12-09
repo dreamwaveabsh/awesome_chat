@@ -17,7 +17,7 @@ $(document).ready(function(){
         return false
       }
       newContactUsers.forEach(user => {
-        console.log(user)
+
         $("#request-contact-received").find("ul").append(`<li class="_contactList" data-uid="${user._id}">
         <div class="contactPanel">
             <div class="user-avatar">
