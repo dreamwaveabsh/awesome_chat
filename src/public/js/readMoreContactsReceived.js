@@ -32,7 +32,7 @@ $(document).ready(function(){
             <div class="user-address">
                 <span>&nbsp ${(user.address!==null?user.address:"")}.</span>
             </div>
-            <div class="user-acccept-contact-received" data-uid="${user._id}">
+            <div class="user-approve-request-contact-received" data-uid="${user._id}">
                 Chấp nhận
             </div>
             <div class="user-remove-request-contact-received action-danger" data-uid="${user._id}">
@@ -42,6 +42,7 @@ $(document).ready(function(){
     </li>`);
       });
       removeRequestContactReceived();
+      approveRequestContactReceived();
       $("#link-read-more-contacts-received").css("display","inline-block")
       $(".lds-hourglass").css("display","none")
     });
