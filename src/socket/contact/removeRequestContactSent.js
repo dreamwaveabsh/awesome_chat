@@ -1,16 +1,16 @@
 import {pushSocketIdToAraay,emitNotifyToArray,removeSocketIdToAraay} from "./../../helper/socketHelper"
-let removeRequestContact = (io)=>{
+let removeRequestContactSent = (io)=>{
   let clients = {};
   io.on("connection",(socket)=>{
 
     clients = pushSocketIdToAraay(clients,socket.request.user._id,socket.id)
 
-    socket.on("remove-request-contact",(data)=>{
+    socket.on("remove-request-contact-sent",(data)=>{
         let currentUser = {
           id:socket.request.user._id
         };
         if(clients[data.contactId]){
-          emitNotifyToArray(clients,data.contactId,io,"response-remove-request-contact",currentUser)
+          emitNotifyToArray(clients,data.contactId,io,"response-remove-request-contact-sent",currentUser)
         }
         
     })
@@ -19,4 +19,4 @@ let removeRequestContact = (io)=>{
     })
   })
 }
-module.exports = removeRequestContact;
+module.exports = removeRequestContactSent;

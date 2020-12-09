@@ -39,14 +39,14 @@ let addNew = (currentUserId,contactId) =>{
     resolve(newContact)
   });
 }
-let removeRequestContact = (currentUserId,contactId) =>{
+let removeRequestContactSent = (currentUserId,contactId) =>{
   return new Promise(async (resolve,reject)=>{
-    let removeReq = await contactModel.removeRequestContact(currentUserId,contactId);
+    let removeReq = await contactModel.removeRequestContactSent(currentUserId,contactId);
     if(removeReq.result.n ===0){
       return reject(false)
     }
     //remove notification
-    await notificationModel.model.removeRequestContactNotification(currentUserId,contactId,notificationModel.types.ADD_CONTACT)
+    await notificationModel.model.removeRequestContactSentNotification(currentUserId,contactId,notificationModel.types.ADD_CONTACT)
     resolve(true)
 
   });
@@ -173,7 +173,7 @@ let readMoreContactsReceived = (currentUserId,skipNumberContacts) =>{
 module.exports = {
   findUserContact:findUserContact,
   addNew:addNew,
-  removeRequestContact:removeRequestContact,
+  removeRequestContactSent:removeRequestContactSent,
   getContacts:getContacts,
   getContactsSent:getContactsSent,
   getContactsReceived:getContactsReceived,
