@@ -165,12 +165,12 @@ function changeTypeChat(){
 }
 function changeScreenChat(){
   $(".room-chat").unbind("click").on("click",function(){
+    let divId = $(this).find("li").data("chat")
     $(".person").removeClass("active")
-    $(this).find("li").addClass("active")
+    $(`.person[data-chat = ${divId} ]`).addClass("active")
     $(this).tab("show");
 
     //cấu hình thanh cuộn box chat rightside
-    let divId = $(this).find("li").data("chat")
     nineScrollRight(divId);
 
     enableEmojioneArea(divId);

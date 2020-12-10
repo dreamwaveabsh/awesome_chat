@@ -28,6 +28,7 @@
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.4",
     "ejs": "^2.5.7",
+    "emojione": "^4.5.0",
     "express": "^4.17.1",
     "express-ejs-extend": "0.0.1",
     "express-session": "^1.15.6",

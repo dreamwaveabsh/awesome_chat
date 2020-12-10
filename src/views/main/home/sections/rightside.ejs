@@ -20,6 +20,28 @@
                             <i class="fa fa-photo"></i>
                         </a>
                     </span>
+                    <span class="chat-menu-right">
+                        <a href="javascript:void(0)">&nbsp;</a>
+                    </span>
+                    <span class="chat-menu-right">
+                        <a href="javascript:void(0)" class="numer-members" data-toggle="modal">
+                             <span class="show-number-members">
+                            <%= conversation.userAmount %>
+                            </span>
+                            <i class="fa fa-users"></i>
+                        </a>
+                    </span>
+                    <span class="chat-menu-right">
+                        <a href="javascript:void(0)">&nbsp;</a>
+                    </span>
+                    <span class="chat-menu-right">
+                        <a href="javascript:void(0)" class="numer-messages" data-toggle="modal">
+                             <span class="show-number-messages">
+                            <%= conversation.messageAmount %>
+                            </span>
+                            <i class="fa fa-comments-o"></i>
+                        </a>
+                    </span>
                 </div>
                 <div class="content-chat">
                     <div class="chat" data-chat="<%= conversation._id %>">
