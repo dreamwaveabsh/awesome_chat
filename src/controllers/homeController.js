@@ -1,4 +1,5 @@
 import {notification,contact,message} from "./../services/index";
+import {bufferToBase64} from "./../helper/clientHelper"
 
 let getHome = async (req,res)=>{
   //only 10
@@ -17,6 +18,7 @@ let getHome = async (req,res)=>{
   let allConversations = getAllConversationItems.allConversations;
   let userConversations = getAllConversationItems.userConversations;
   let groupConversations = getAllConversationItems.groupConversations;
+  let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
 
 
 
@@ -35,7 +37,9 @@ let getHome = async (req,res)=>{
     countAllContactsReceived:countAllContactsReceived,
     allConversations:allConversations,
     userConversations:userConversations,
-    groupConversations:groupConversations
+    groupConversations:groupConversations,
+    allConversationWithMessages:allConversationWithMessages,
+    bufferToBase64:bufferToBase64
   })
 }
 module.exports ={
