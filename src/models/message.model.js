@@ -40,10 +40,10 @@ MessageSchema.statics={
           {"senderId":receivedId}
         ]}
       ]
-    }).sort({"createAt":1}).limit(limit).exec();
+    }).sort({"createAt":-1}).limit(limit).exec();
   },
   getMessagesInGroup(receivedId,limit){
-    return this.find({"receivedId":receivedId}).sort({"createAt":1}).limit(limit).exec();
+    return this.find({"receivedId":receivedId}).sort({"createAt":-1}).limit(limit).exec();
   }
 }
 const MESSAGE_CONVERSATION_TYPE = {
