@@ -2,7 +2,8 @@ import contactModel from "./../models/contact.model"
 import userModel from "./../models/user.model"
 import chatGroupModel from "./../models/chatGroup.model"
 import messageModel from "./../models/message.model"
-import _ from "lodash"
+import _ from "lodash";
+import {transErrors} from "./../../lang/vi"
 
 const  LIMIT_CONVERSATION_TAKEN = 15;
 const  LIMIT_MESSAGE_TAKEN = 30;
@@ -57,6 +58,64 @@ let getAllConversationItems = (currentUserId)=>{
     }
   })
 };
+let addNewTextEmoji = (sender,receivedId,messageVal,isChatGroup)=>{
+  return new Promise(async (resolve,reject)=>{
+    try {
+      if(isChatGroup){
+        let getChatGroupReceived = await chatGroupModel.getChatGroupById(receivedId);
+        if(!getChatGroupReceived){
+          return reject(transErrors.conversation_not_found)
+        }
+        let received = {
+          id: getChatGroupReceived._id,
+          name:getChatGroupReceived.name,
+          avatar:"group-avatar-trungquandev.png"
+        };
+        let newMessageItem ={
+          senderId: sender.id,
+          receivedId: received.id,
+          conversationType: messageModel.conversationTypes.GROUP,
+          messageType: messageModel.messageTypes.TEXT,
+          sender:sender,
+          receiver:received,
+          text:messageVal,
+          createAt:Date.now()
+        }
+        let newMessage = await messageModel.model.createNew(newMessageItem);
+        await chatGroupModel.updateWhenHasNewMessage(getChatGroupReceived._id,getChatGroupReceived.messageAmount +1);
+        resolve(newMessage)
+      }else{
+        let getUserReceived = await userModel.getNormalUserDataById(receivedId);
+        if(!getUserReceived){
+          return reject(transErrors.conversation_not_found)
+        }
+        let received = {
+          id: getUserReceived._id,
+          name:getUserReceived.username,
+          avatar:getUserReceived.avatar
+        };
+        let newMessageItem ={
+          senderId: sender.id,
+          receivedId: received.id,
+          conversationType: messageModel.conversationTypes.PERSONAL,
+          messageType: messageModel.messageTypes.TEXT,
+          sender:sender,
+          receiver:received,
+          text:messageVal,
+          createAt:Date.now()
+        }
+        let newMessage = await messageModel.model.createNew(newMessageItem);
+        await contactModel.updateWhenHasNewMessage(sender.id,getUserReceived._id);
+        
+        resolve(newMessage);
+      }
+    } catch (error) {
+      reject(error)
+    }
+  })
+
+}
 module.exports = {
-  getAllConversationItems:getAllConversationItems
+  getAllConversationItems:getAllConversationItems,
+  addNewTextEmoji:addNewTextEmoji
 }

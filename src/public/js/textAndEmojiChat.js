@@ -1,3 +1,5 @@
+
+
 function textAndEmojiChat (divId){
   $(".emojionearea").unbind("keyup").on("keyup",function(element){
     if(element.which === 13){
@@ -15,9 +17,9 @@ function textAndEmojiChat (divId){
       }
       //call send message
       $.post("/message/add-new-text-emoji",dataTextEmojiForSend,function(data){
-        //success
-      }).fail(function(res){
-        //error
+        console.log(data.message)
+      }).fail(function(response){
+        alertify.notify(response.responseText,'error',7)
       })
     }
   })

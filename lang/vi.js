@@ -7,7 +7,8 @@ export const transValidation ={
   update_gender:"Giới tính chỉ được nam và nữ  thôi , ok ",
   update_address:"Địa chỉ giới hạn trong khoảng 3-30 ký tự",
   update_phone:"Số điện thoại Việt Nam bắt đầu bằng số 0 và giới hạn trong 10-11 ký tự",
-  keyword_find_user:"Chỉ cho phép chữ cái và số"
+  keyword_find_user:"Chỉ cho phép chữ cái và số",
+  message_text_emoji_incorrect:"Tin nhắn không hợp lệ. Đảm bảo tối thiểu 1 ký tự, tối đa 400 ký tự"
 }
 export const transErrors = {
   account_in_use:"Email này đã được sử dụng",
@@ -19,7 +20,8 @@ export const transErrors = {
   server_error:"Có lỗi ở phía sever , vui lòng liên hệ admin để khắc phục",
   avatar_type:"Kiểu file không hợp lệ, chỉ nhập nhận jpg,png",
   avatar_size:"Ảnh tối đa 1mb",
-  user_current_password_failed:"Mật khẩu hiện tại không chính xác"
+  user_current_password_failed:"Mật khẩu hiện tại không chính xác",
+  conversation_not_found:"Cuộc trò  chuyện không tồn tại"
 }
 export const transSuccess ={
   userCreated: (userEmail)=>{
