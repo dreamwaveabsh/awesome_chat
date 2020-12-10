@@ -79,6 +79,7 @@ ContactSchema.statics = {
       ]
     },{
       "status":true,
+      "updateAt":Date.now()
 
     }).exec();
   },
@@ -91,7 +92,7 @@ ContactSchema.statics = {
         ]},
         {"status":true}
       ]
-    }).sort({"createAt":-1}).limit(limit).exec();
+    }).sort({"updateAt":-1}).limit(limit).exec();
   },
   getContactsSent(userId,limit){
     return this.find({
@@ -145,7 +146,7 @@ ContactSchema.statics = {
         ]},
         {"status":true}
       ]
-    }).sort({"createAt":-1}).skip(skip).limit(limit).exec();
+    }).sort({"updateAt":-1}).skip(skip).limit(limit).exec();
   },
   readMoreContactsSent(userId,skip,limit){
     return this.find({
