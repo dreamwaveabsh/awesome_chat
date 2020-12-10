@@ -6,7 +6,7 @@ function removeContact(){
     Swal.fire({
       title: `Bạn có chắc chăn muốn xóa ${username} khỏi danh bạ`,
       text: "Đổi rồi thôi đó nghe!",
-      icon: 'warning',
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#2ECC71',
       cancelButtonColor: '#ff7675',
