@@ -1,5 +1,5 @@
 import {notification,contact,message} from "./../services/index";
-import {bufferToBase64} from "./../helper/clientHelper"
+import {bufferToBase64,lastItemOfArray,convertTimeStampToHumanTime} from "./../helper/clientHelper"
 
 let getHome = async (req,res)=>{
   //only 10
@@ -39,7 +39,9 @@ let getHome = async (req,res)=>{
     userConversations:userConversations,
     groupConversations:groupConversations,
     allConversationWithMessages:allConversationWithMessages,
-    bufferToBase64:bufferToBase64
+    bufferToBase64:bufferToBase64,
+    lastItemOfArray:lastItemOfArray,
+    convertTimeStampToHumanTime:convertTimeStampToHumanTime
   })
 }
 module.exports ={
