@@ -30,10 +30,16 @@ let getAllConversationItems = (currentUserId)=>{
         return -item.updateAt;
       })
       let allConversationWithMessagesPromise = allConversations.map(async (conversation)=>{
-        let getMessages = await messageModel.model.getMessages(currentUserId,conversation._id,LIMIT_MESSAGE_TAKEN);
         conversation=conversation.toObject();
-        conversation.messages = getMessages;
-        return conversation;
+        if(conversation.members){
+          let getMessages = await messageModel.model.getMessagesInGroup(conversation._id,LIMIT_MESSAGE_TAKEN);
+          conversation.messages = getMessages;
+          return conversation;
+        }else{
+          let getMessages = await messageModel.model.getMessagesInPersonal(currentUserId,conversation._id,LIMIT_MESSAGE_TAKEN);
+          conversation.messages = getMessages;
+          return conversation;
+        }
       })
       let allConversationWithMessages = await Promise.all(allConversationWithMessagesPromise);
 
