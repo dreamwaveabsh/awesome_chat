@@ -1387,3 +1387,8 @@ label:focus,
 .show-number-messages{
   color: #2c3e50!important;
 }
+.message-time-realtime{
+  color:#e74c3c!important;
+  font-weight:bold;
+
+}
