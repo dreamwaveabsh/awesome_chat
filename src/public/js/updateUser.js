@@ -6,7 +6,6 @@ let userUpdatePassword = {};
 
 function callLogout(){
   let timerInterval;
-
   Swal.fire({
     position: 'top-end',
     title: 'Tự động đăng xuất sau 5 giây.',

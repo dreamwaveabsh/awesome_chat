@@ -174,6 +174,8 @@ function changeScreenChat(){
     nineScrollRight(divId);
 
     enableEmojioneArea(divId);
+
+    videoChat(divId)
   })
 }
 $(document).ready(function() {
@@ -212,4 +214,8 @@ $(document).ready(function() {
   changeScreenChat();
 
   $("ul.people").find("a")[0].click();
+
+  $("#video-chat-group").bind("click",function(){
+    alertify.notify("Tính năng này không khả dụng với nhóm trò chuyện","error",7)
+  })
 });

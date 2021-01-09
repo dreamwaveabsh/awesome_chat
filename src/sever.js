@@ -16,6 +16,7 @@ import socketio from "socket.io"
 import initSockets from "./socket/index"
 import cookieParser from "cookie-parser"
 import configSocketIo from "./config/socketio"
+import events from "events"
 
 
 
@@ -24,6 +25,8 @@ import configSocketIo from "./config/socketio"
 var app = express();
 //connect to mongodb
 
+
+events.EventEmitter.defaultMaxListeners = 30;
 //init sever with socket.io & express app
 let sever = http.createServer(app);
 let io = socketio(sever);
