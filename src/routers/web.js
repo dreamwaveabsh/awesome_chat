@@ -5,6 +5,7 @@ import {authValid,userValid,contactValid,messageValid} from "../validation/index
 import {initPassportLocal} from "./../controllers/passportController/local";
 import {initPassportFacebook} from "./../controllers/passportController/facebook";
 import {initPassportGoogle} from "./../controllers/passportController/google";
+import {admin} from './../controllers/admin/index'
 
 
 //init passport local
@@ -57,6 +58,9 @@ let initRouter = (app)=>{
   router.put("/notification/mark-all-as-read",auth.checkLogin,notification.markAllAsRead)
 
   router.post("/message/add-new-text-emoji",auth.checkLogin,messageValid.checkMessageLength,message.addNewTextEmoji);
+
+  router.get("/admin/",admin.getHomeAdmin)
+  router.get("/admin/login",admin.loginAdmin)
   return app.use("/",router);
 };
 module.exports = initRouter;
